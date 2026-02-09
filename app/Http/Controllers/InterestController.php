@@ -15,7 +15,7 @@ class InterestController extends Controller
 
     public function index()
     {
-        // Используем связь и наш scope для сортировки
+        //  связь и скоуп для сортировки
         $interests = Auth::user()->interests()->recent()->get();
 
         return view('interests.index', compact('interests'));
@@ -27,7 +27,6 @@ class InterestController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        // Создаем через связь, ID юзера подставится сам
         $interest = Auth::user()->interests()->create([
             'name' => $request->name,
         ]);
@@ -71,7 +70,6 @@ class InterestController extends Controller
     {
         $user = Auth::user();
 
-        // Тут можно оптимизировать, но оставим логику подсчета
         $totalCount = $user->interests()->count();
         $todayCount = $user->interests()->whereDate('created_at', today())->count();
         $monthCount = $user->interests()->where('created_at', '>=', now()->startOfMonth())->count();
