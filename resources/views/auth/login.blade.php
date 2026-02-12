@@ -70,5 +70,4 @@
             </div>
         </div>
     </div>
-    <h3>__________admin@example.com____password</h3>
 @endsection

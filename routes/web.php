@@ -2,14 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\InterestController;
-use App\Http\Controllers\AdminController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
+use App\Http\Controllers\Interests;
+use App\Http\Controllers\Admin;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -18,25 +12,26 @@ Route::get('/', function () {
         }
         return redirect()->route('interests.index');
     }
-
     return redirect()->route('login');
 });
 
-// Роуты аутентификации
 Auth::routes();
 
 // Группа для обычных юзеров
 Route::middleware('auth')->group(function () {
-    Route::get('/interests', [InterestController::class, 'index'])->name('interests.index');
-    Route::post('/interests', [InterestController::class, 'store'])->name('interests.store');
-    Route::get('/interests/list', [InterestController::class, 'getList'])->name('interests.list');
-    Route::get('/interests/stats', [InterestController::class, 'getStats'])->name('interests.stats');
-    Route::put('/interests/{interest}', [InterestController::class, 'update'])->name('interests.update');
-    Route::delete('/interests/{interest}', [InterestController::class, 'destroy'])->name('interests.destroy');
+    Route::get('/interests', Interests\IndexController::class)->name('interests.index');
+    Route::post('/interests', Interests\StoreController::class)->name('interests.store');
+
+    // API-like endpoints
+    Route::get('/interests/list', Interests\ListController::class)->name('interests.list');
+    Route::get('/interests/stats', Interests\StatsController::class)->name('interests.stats');
+
+    Route::put('/interests/{interest}', Interests\UpdateController::class)->name('interests.update');
+    Route::delete('/interests/{interest}', Interests\DestroyController::class)->name('interests.destroy');
 });
 
-// Группа для Аадмина
+// Группа для Админа
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('index');
-    Route::get('/user/{user}/interests', [AdminController::class, 'showUserInterests'])->name('user.interests');
+    Route::get('/', Admin\DashboardController::class)->name('index');
+    Route::get('/user/{user}/interests', Admin\UserInterestsController::class)->name('user.interests');
 });
