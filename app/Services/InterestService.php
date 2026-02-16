@@ -4,7 +4,7 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\InterestRepositoryInterface;
-use App\DTO\InterestData;
+use App\DTO\InterestDTO;
 use App\Models\Interest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
@@ -22,12 +22,12 @@ class InterestService
         return $this->repository->getAllForUser(Auth::id());
     }
 
-    public function createInterest(InterestData $data): Interest
+    public function createInterest(InterestDTO $data): Interest
     {
         return $this->repository->create($data);
     }
 
-    public function updateInterest(Interest $interest, InterestData $data): bool
+    public function updateInterest(Interest $interest, InterestDTO $data): bool
     {
         if ($interest->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');

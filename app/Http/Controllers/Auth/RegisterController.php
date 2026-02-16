@@ -8,14 +8,14 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Jobs\SendWelcomeEmail;
+use App\Jobs\SendWelcomeEmailJob;
 class RegisterController extends Controller
 {
     use RegistersUsers;
 
     protected function registered(Request $request, $user)
     {
-        SendWelcomeEmail::dispatch($user);
+        SendWelcomeEmailJob::dispatch($user);
     }
     protected $redirectTo = '/interests';
 
