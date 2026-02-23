@@ -34,7 +34,8 @@ class InterestTest extends TestCase
             'name' => 'Путешествия'
         ]);
 
-        $response->assertJson(['success' => true]);
+        $response->assertStatus(201)
+            ->assertJsonFragment(['name' => 'Путешествия']);
         $this->assertDatabaseHas('interests', [
             'name' => 'Путешествия',
             'user_id' => $user->id

@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use App\Models\User;
 use App\Mail\WelcomeEmail;
 use Illuminate\Support\Facades\Mail;
-
 class SendEmailCommand extends Command
 {
 
@@ -29,8 +28,7 @@ class SendEmailCommand extends Command
         $this->info("Отправка письма пользователю: {$user->email}...");
 
         try {
-            // Используем в Mailable
-            Mail::to($user->email)->send(new WelcomeEmail($user));
+            Mail::to($user->email)->send(new WelcomeEmail($user->email, $user->name));
 
             $this->info("Письмо успешно отправлено!");
             return Command::SUCCESS;

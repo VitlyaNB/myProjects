@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Contracts\InterestRepositoryInterface;
-use App\Repositories\EloquentInterestRepository;
+use App\Repositories\InterestRepository;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\UserRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(InterestRepositoryInterface::class, EloquentInterestRepository::class);
+        $this->app->bind(InterestRepositoryInterface::class, InterestRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**

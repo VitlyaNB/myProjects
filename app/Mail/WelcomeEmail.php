@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -13,8 +12,10 @@ class WelcomeEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public User $user)
-    {
+    public function __construct(
+        public string $email,
+        public string $name,
+    ) {
     }
 
     public function envelope(): Envelope

@@ -13,11 +13,11 @@ class InterestSeeder extends Seeder
     {
         $users = User::all();
 
-        if ($users->isEmpty());
-        $user = User::factory()->create();
-        $users = collect([$user]);
+        if ($users->isEmpty()) {
+            $user = User::factory()->create();
+            $users = collect([$user]);
+        }
 
         Interest::factory()->count(50)->create();
-
     }
 }

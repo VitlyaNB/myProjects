@@ -9,7 +9,7 @@ use Illuminate\View\View;
 
 class IndexController extends Controller
 {
-    public function __construct(protected InterestService $service)
+    public function __construct(private InterestService $service)
     {
     }
 
