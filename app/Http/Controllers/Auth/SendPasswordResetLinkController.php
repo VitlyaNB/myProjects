@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SendPasswordResetLinkRequest; // Подключили наш реквест
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
 class SendPasswordResetLinkController extends Controller
 {
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(SendPasswordResetLinkRequest $request): RedirectResponse
     {
-        $request->validate(['email' => 'required|email']);
-
         $status = Password::broker()->sendResetLink(
             $request->only('email')
         );

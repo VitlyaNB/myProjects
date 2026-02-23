@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProcessResetPasswordRequest; // Подключили реквест
 use App\Services\AuthService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
 class ProcessResetPasswordController extends Controller
@@ -13,15 +13,8 @@ class ProcessResetPasswordController extends Controller
     public function __construct(private AuthService $service)
     {
     }
-
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(ProcessResetPasswordRequest $request): RedirectResponse
     {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed|min:8',
-        ]);
-
         $status = $this->service->resetPassword(
             $request->only('email', 'password', 'password_confirmation', 'token')
         );
