@@ -11,11 +11,8 @@ class InterestSeeder extends Seeder
 {
     public function run(): void
     {
-        $users = User::all();
-
-        if ($users->isEmpty()) {
-            $user = User::factory()->create();
-            $users = collect([$user]);
+        if (User::count() === 0) {
+            User::factory()->create();
         }
 
         Interest::factory()->count(50)->create();

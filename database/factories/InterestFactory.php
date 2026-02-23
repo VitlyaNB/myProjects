@@ -36,7 +36,7 @@ class InterestFactory extends Factory
         ];
         return [
             'name' => $this->faker->randomElement($names),
-            'user_id' =>User::inRandomOrder()->first()->id ?? User::factory(),
+            'user_id' => User::inRandomOrder()->first()?->id ?? User::factory(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

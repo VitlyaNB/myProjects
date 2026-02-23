@@ -13,10 +13,10 @@ class StatsController extends Controller
     {
     }
 
-    public function __invoke(): JsonResponse
+    public function __invoke(): StatsResource
     {
         $stats = $this->service->getStats();
 
-        return new JsonResponse(new StatsResource($stats));
+        return new StatsResource($stats);
     }
 }
